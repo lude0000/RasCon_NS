@@ -23,8 +23,8 @@ async def _main(args):
     controller = Controller.PRO_CONTROLLER
     
     with utils.get_output(path=args.log, default=None) as capture_file:
-        factory = controller_protocol_factory(controller, spi_flash=spi_flash)
-        transport, protocol = await create_hid_server(factory, 
+        factory = controller_protocol_factory(controller, spi_flash=spi_flash, reconnect=args.reconnect_bt_addr)
+        transport, protocol = await create_hid_server(factory, reconnect_bt_addr=args.reconnect_bt_addr,
                                                       ctl_psm=17,itr_psm=19, 
                                                       capture_file=capture_file)
 
@@ -50,6 +50,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-l', '--log')
+    parser.add_argument('-r', '--reconnect_bt_addr', type=str, default=None)
     args = parser.parse_args()
 
     loop = asyncio.get_event_loop()
