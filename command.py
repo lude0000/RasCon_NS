@@ -7,6 +7,7 @@ import shlex
 
 from aioconsole import ainput
 from joycontrol.controller_state import button_push, ControllerState
+from joycontrol.nfc_tag import NFCTag
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +107,7 @@ class CCLI():
 
         with open('file/amiibo/'+fileName, 'rb') as amiibo_file:
             content = await loop.run_in_executor(None, amiibo_file.read)
-            self.controller_state.set_nfc(content)
+            self.controller_state.set_nfc(NFCTag.load_amiibo('file/amiibo/'+fileName))
             print('amiibo设置成功')
 
     def set_stick(self,stick, direction, value=None):
