@@ -99,16 +99,9 @@ class CCLI():
 
 
     async def set_amiibo(self,fileName):
-        """
-        Sets nfc content of the controller state to contents of the given file.
-        :param fileBName: amiibo文件名(文件固定放在项目文件夹的file/amiibo里)
-        """
-        loop = asyncio.get_event_loop()
-
-        with open('file/amiibo/'+fileName, 'rb') as amiibo_file:
-            content = await loop.run_in_executor(None, amiibo_file.read)
-            self.controller_state.set_nfc(NFCTag.load_amiibo('file/amiibo/'+fileName))
-            print('amiibo设置成功')
+        
+        self.controller_state.set_nfc(NFCTag.load_amiibo('file/amiibo/'+fileName))
+        print('amiibo设置成功')
 
     def set_stick(self,stick, direction, value=None):
 
